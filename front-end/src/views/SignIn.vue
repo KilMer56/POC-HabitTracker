@@ -20,8 +20,9 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import FormInput from '../components/FormInput.vue';
 import { userStore } from '../store/User';
+import validEmail from "../components/utils";
+import FormInput from '../components/FormInput.vue';
 
 @Options({
   components: {
@@ -49,17 +50,12 @@ export default class SignIn extends Vue {
   }
 
   validate() {
-    if(this.form.email == null && this.validEmail(this.form.email)){
+    if(this.form.email == null || !validEmail(this.form.email)){
       this.errors['email'] = "The email should be valid"; 
     }
     if(this.form.password == null || this.form.password.length < 5){
       this.errors['password'] = "The password length should be superior than 5"; 
     }
-  }
-
-  validEmail(email: string): boolean {
-    let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
   }
 }
 </script>
