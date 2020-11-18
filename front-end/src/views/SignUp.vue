@@ -33,7 +33,7 @@
 import { Options, Vue } from 'vue-class-component';
 import validEmail from "../components/utils";
 import FormInput from '../components/FormInput.vue';
-//import { userStore } from '../store/User';
+import { userStore } from '../store/User';
 
 @Options({
   components: {
@@ -55,12 +55,11 @@ export default class SignUp extends Vue {
         this.validate();
 
         if(Object.keys(this.errors).length == 0){
-          console.log("Sign Up")
+          await userStore.signUp(this.form);
         }
     }
 
     validate() {
-      console.log(this.form.firstname == null && this.form.firstname.length == 0);
       if(this.form.firstname == null || this.form.firstname.length == 0){
         this.errors['firstname'] = "Required"; 
       }
