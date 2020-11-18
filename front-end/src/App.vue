@@ -63,7 +63,7 @@ input {
   color: #707070;
 }
 
-input:focus{
+*:focus{
   outline: none;
   border: 1px #c9c9c9;
 }

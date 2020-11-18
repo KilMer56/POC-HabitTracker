@@ -11,8 +11,9 @@ class UserStore extends Store<User> {
         };
     }
 
-    async connect(){
+    async connect(): Promise<boolean> {
         this.state.isConnected = true;
+        return true;
     }
 }
 

@@ -37,9 +37,9 @@ export default class HelloWorld extends Vue {
     this.validate();
 
     if(Object.keys(this.errors).length == 0){
-      await userStore.connect();
+      let success = await userStore.connect();
       
-      if(userStore.getState().isConnected){
+      if(success){
         console.log("connected");
       }
     }
