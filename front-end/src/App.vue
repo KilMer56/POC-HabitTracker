@@ -1,16 +1,10 @@
 <template>
-  <Login />
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import Login from './components/Login.vue';
+import { Vue } from 'vue-class-component';
 
-@Options({
-  components: {
-    Login,
-  },
-})
 export default class App extends Vue {}
 </script>
 
@@ -68,14 +62,8 @@ input {
   border: 1px #c9c9c9;
 }
 
-.half {
-  width: 50%;
-}
-
 button {
-  background-color: #45b3f7;
   border: none;
-  color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
@@ -83,5 +71,26 @@ button {
   font-size: 16px;
   cursor: pointer;
   border-radius: 20px;
+}
+
+.primary {
+  color: white;
+  background-color: #45b3f7;
+}
+
+.secondary {
+  color: #45b3f7;
+  background-color: white;
+  border: 1px solid #45b3f7;
+}
+
+.card {
+  padding: 2rem;
+  width: 25%;
+}
+
+.title {
+  margin-bottom: 2.5rem;
+  color: #474747;
 }
 </style>

@@ -1,4 +1,4 @@
-import { Store } from "./main";
+import { Store } from "./index";
 
 interface User extends Object {
     isConnected: boolean
