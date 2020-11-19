@@ -71,6 +71,11 @@ button {
   font-size: 16px;
   cursor: pointer;
   border-radius: 20px;
+  transition: transform .2s; 
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 
 .primary {
@@ -90,7 +95,7 @@ button {
 }
 
 .title {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   color: #474747;
 }
 </style>

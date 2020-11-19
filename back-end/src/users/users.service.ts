@@ -18,4 +18,8 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     return this.UserModel.find().exec();
   }
+
+  async findOne(email: string): Promise<User | undefined> {
+    return this.UserModel.findOne({ email });
+  }
 }
