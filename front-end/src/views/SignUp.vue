@@ -18,7 +18,7 @@
           <input type="password" v-model="form.password" />
         </FormInput>
         <FormInput label="Confirm password" :errorMessage="errors['confirmPassword']">
-          <input type="password" v-model="form.confirmPassword" />
+          <input type="password" v-model="confirmPassword" />
         </FormInput>
         <div class="center">
           <button class="secondary" @click="$router.go(-1)" style="margin-right: 20px">Return</button>
@@ -31,9 +31,11 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import validEmail from "../components/utils";
+import { validEmail } from '../utils/index';
+// import { SignUpParams } from "../types/user.type"
+
 import FormInput from '../components/FormInput.vue';
-import { userStore } from '../store/User';
+import UserService from '../services/user.service';
 
 @Options({
   components: {
@@ -42,41 +44,42 @@ import { userStore } from '../store/User';
 })
 export default class SignUp extends Vue {
     errors: any = {};
+
+    confirmPassword = '';
+
     form: any = {
-        firstname: "",
-        lastname: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
     };
 
     async onSubmit() {
-        this.errors = {};
-        this.validate();
+      this.errors = {};
+      this.validate();
 
-        if(Object.keys(this.errors).length == 0){
-          await userStore.signUp(this.form);
-        }
+      if (Object.keys(this.errors).length == 0) {
+        console.log(this.form);
+        await UserService.signUp(this.form);
+      }
     }
 
     validate() {
-      if(this.form.firstname == null || this.form.firstname.length == 0){
-        this.errors['firstname'] = "Required"; 
+      if (this.form.firstname == null || this.form.firstname.length == 0) {
+        this.errors.firstname = 'Required';
       }
-      if(this.form.lastname == null || this.form.lastname.length == 0){
-        this.errors['lastname'] = "Required"; 
+      if (this.form.lastname == null || this.form.lastname.length == 0) {
+        this.errors.lastname = 'Required';
       }
-      if(this.form.email == null || !validEmail(this.form.email)){
-        this.errors['email'] = "The email should be valid"; 
+      if (this.form.email == null || !validEmail(this.form.email)) {
+        this.errors.email = 'The email should be valid';
       }
-      if(this.form.password == null || this.form.password.length < 5){
-        this.errors['password'] = "The password length should be superior than 5"; 
+      if (this.form.password == null || this.form.password.length < 5) {
+        this.errors.password = 'The password length should be superior than 5';
       }
-      if(this.form.confirmPassword !== this.form.password){
-        this.errors['confirmPassword'] = "Both passwords are different"; 
+      if (this.confirmPassword !== this.form.password) {
+        this.errors.confirmPassword = 'Both passwords are different';
       }
-
-      console.log(this.errors)
     }
 }
 </script>

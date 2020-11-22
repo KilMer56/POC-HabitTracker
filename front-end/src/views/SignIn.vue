@@ -20,9 +20,15 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import { userStore } from '../store/User';
-import validEmail from "../components/utils";
+import { useToast } from 'vue-toastification';
+import { validEmail } from '../utils/index';
+
+import { Response } from "../types/service.type"
+import { SignInParams, SessionInfo } from "../types/user.type"
+
 import FormInput from '../components/FormInput.vue';
+import UserService from '../services/user.service';
+import UserStore from '../store/user.store';
 
 @Options({
   components: {
@@ -31,30 +37,34 @@ import FormInput from '../components/FormInput.vue';
 })
 export default class SignIn extends Vue {
   errors: any = {};
-  form: any = {
-    email: "",
-    password: ""
+
+  form: SignInParams = {
+    email: '',
+    password: '',
   };
+
+  toast = useToast();
 
   async onSubmit() {
     this.errors = {};
     this.validate();
 
-    if(Object.keys(this.errors).length == 0){
-      let success = await userStore.connect();
-      
-      if(success){
-        console.log("connected");
+    if (Object.keys(this.errors).length == 0) {
+      const response : Response<SessionInfo> = await UserService.signIn(this.form);
+
+      if (!response.isError && response.data != null) {
+        this.toast.info(response.message);
+        UserStore.setToken(response.data.access_token);
       }
     }
   }
 
   validate() {
-    if(this.form.email == null || !validEmail(this.form.email)){
-      this.errors['email'] = "The email should be valid"; 
+    if (this.form.email == null || !validEmail(this.form.email)) {
+      this.errors.email = 'The email should be valid';
     }
-    if(this.form.password == null || this.form.password.length < 5){
-      this.errors['password'] = "The password length should be superior than 5"; 
+    if (this.form.password == null || this.form.password.length < 5) {
+      this.errors.password = 'The password length should be superior than 5';
     }
   }
 }
