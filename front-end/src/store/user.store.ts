@@ -16,6 +16,10 @@ class UserStore extends Store<UserState> {
       };
     }
 
+    isAuthentificated(): boolean {
+        return this.state.token.length > 0;
+    }
+
     setUser(user: UserInfo) {
       this.state.user = user;
     }

@@ -55,6 +55,8 @@ export default class SignIn extends Vue {
       if (!response.isError && response.data != null) {
         this.toast.info(response.message);
         UserStore.setToken(response.data.access_token);
+
+        this.$router.push("/dashboard");
       }
     }
   }
