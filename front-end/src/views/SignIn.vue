@@ -19,31 +19,23 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { useToast } from 'vue-toastification';
-import { validEmail } from '../utils/index';
+import { mixins, Vue } from 'vue-class-component';
+import { Toast } from '../mixins/toast.mixin';
+import { Form } from '../mixins/form.mixin';
 
-import { Response } from "../types/service.type"
 import { SignInParams, SessionInfo } from "../types/user.type"
+import { Response } from "../types/service.type"
 
-import FormInput from '../components/FormInput.vue';
 import UserService from '../services/user.service';
 import UserStore from '../store/user.store';
 
-@Options({
-  components: {
-    FormInput,
-  },
-})
-export default class SignIn extends Vue {
+export default class SignIn extends mixins(Toast, Form) {
   errors: any = {};
 
   form: SignInParams = {
     email: '',
     password: '',
   };
-
-  toast = useToast();
 
   async onSubmit() {
     this.errors = {};
@@ -53,16 +45,19 @@ export default class SignIn extends Vue {
       const response : Response<SessionInfo> = await UserService.signIn(this.form);
 
       if (!response.isError && response.data != null) {
-        this.toast.info(response.message);
+        this.toast.success(response.message);
         UserStore.setToken(response.data.access_token);
 
         this.$router.push("/dashboard");
+      }
+      else {
+        this.toast.error(response.message);
       }
     }
   }
 
   validate() {
-    if (this.form.email == null || !validEmail(this.form.email)) {
+    if (this.form.email == null || !this.validEmail(this.form.email)) {
       this.errors.email = 'The email should be valid';
     }
     if (this.form.password == null || this.form.password.length < 5) {

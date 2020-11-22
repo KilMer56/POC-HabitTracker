@@ -30,24 +30,22 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { validEmail } from '../utils/index';
-// import { SignUpParams } from "../types/user.type"
+import { mixins, Vue } from 'vue-class-component';
+import { Toast } from '../mixins/toast.mixin';
+import { Form } from '../mixins/form.mixin';
 
-import FormInput from '../components/FormInput.vue';
+import { Response } from "../types/service.type"
+import { SignUpParams, SessionInfo } from "../types/user.type"
+
 import UserService from '../services/user.service';
+import UserStore from '../store/user.store';
 
-@Options({
-  components: {
-    FormInput,
-  },
-})
-export default class SignUp extends Vue {
+export default class SignUp extends mixins(Toast, Form) {
     errors: any = {};
 
     confirmPassword = '';
 
-    form: any = {
+    form: SignUpParams = {
       firstname: '',
       lastname: '',
       email: '',
@@ -59,8 +57,17 @@ export default class SignUp extends Vue {
       this.validate();
 
       if (Object.keys(this.errors).length == 0) {
-        console.log(this.form);
-        await UserService.signUp(this.form);
+        const response : Response<SessionInfo> = await UserService.signIn(this.form);
+
+        if (!response.isError && response.data != null) {
+          this.toast.success(response.message);
+          UserStore.setToken(response.data.access_token);
+
+          this.$router.push("/dashboard");
+        }
+        else {
+          this.toast.error(response.message);
+        }
       }
     }
 
@@ -71,7 +78,7 @@ export default class SignUp extends Vue {
       if (this.form.lastname == null || this.form.lastname.length == 0) {
         this.errors.lastname = 'Required';
       }
-      if (this.form.email == null || !validEmail(this.form.email)) {
+      if (this.form.email == null || !this.validEmail(this.form.email)) {
         this.errors.email = 'The email should be valid';
       }
       if (this.form.password == null || this.form.password.length < 5) {
