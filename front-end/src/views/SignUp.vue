@@ -55,7 +55,6 @@ export default class SignUp extends mixins(Toast, Form) {
       this.validate();
 
       if (this.hasErrors()) {
-        console.log(this.form)
         const response : Response<SessionInfo> = await UserService.signUp(this.form);
 
         if (!response.isError && response.data != null) {
