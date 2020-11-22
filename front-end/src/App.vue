@@ -33,7 +33,7 @@ export default class App extends Vue {}
 .flat-shadow {
   border-radius: 50px;
   background: #ededed;
-  box-shadow:  20px 20px 60px #c9c9c9, 
+  box-shadow:  20px 20px 60px #c9c9c9,
               -20px -20px 60px #ffffff;
 }
 
@@ -71,7 +71,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   border-radius: 20px;
-  transition: transform .2s; 
+  transition: transform .2s;
 }
 
 button:hover {

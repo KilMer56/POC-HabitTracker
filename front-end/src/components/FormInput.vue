@@ -15,8 +15,8 @@ import { Options, Vue } from 'vue-class-component';
 @Options({
   props: {
     label: String,
-    errorMessage: String
-  }
+    errorMessage: String,
+  },
 })
 export default class FormInput extends Vue {}
 </script>
