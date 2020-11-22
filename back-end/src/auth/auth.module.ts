@@ -25,10 +25,6 @@ import { JwtModule } from '@nestjs/jwt';
       inject: [ConfigService]
     }),
     ConfigModule,
-    /*JwtModule.registerAsync({
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
-    })*/
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController]
