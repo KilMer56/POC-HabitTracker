@@ -30,8 +30,6 @@ import UserService from '../services/user.service';
 import UserStore from '../store/user.store';
 
 export default class SignIn extends mixins(Toast, Form) {
-  errors: any = {};
-
   form: SignInParams = {
     email: '',
     password: '',
@@ -41,7 +39,7 @@ export default class SignIn extends mixins(Toast, Form) {
     this.errors = {};
     this.validate();
 
-    if (Object.keys(this.errors).length == 0) {
+    if (this.hasErrors()) {
       const response : Response<SessionInfo> = await UserService.signIn(this.form);
 
       if (!response.isError && response.data != null) {

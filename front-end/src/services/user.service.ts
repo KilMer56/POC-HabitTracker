@@ -9,7 +9,7 @@ class UserService {
 
     async signUp(data: SignUpParams): Promise<Response<SessionInfo>> {
       try {
-        const res = await http.post(`/users`, data);
+        const res = await http.post(`/signUp`, data);
         return new Response<SessionInfo>(false, res.data, res.status, 'Signed Up succesfully');
       } catch (error) {
         return new Response<SessionInfo>(true, null, error.response.status, error.response.data.message);
@@ -18,7 +18,7 @@ class UserService {
 
     async signIn(data: SignInParams): Promise<Response<SessionInfo>> {
       try {
-        const res = await http.post('/auth/login', data);
+        const res = await http.post('/login', data);
         return new Response<SessionInfo>(false, res.data, res.status, 'Signed In succesfully');
       } catch (error) {
         return new Response<SessionInfo>(true, null, error.response.status, error.response.data.message);
