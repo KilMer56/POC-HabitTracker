@@ -11,12 +11,7 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('auth/login')
     async login(@Request() req) {
-        let token = await this.authService.login(req.user);
-
-        return {
-            message: "Successfuly logged in",
-            data: token
-        };
+        return await this.authService.login(req.user);
     }
 
     @UseGuards(JwtAuthGuard)
