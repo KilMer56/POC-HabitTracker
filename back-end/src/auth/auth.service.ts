@@ -33,4 +33,14 @@ export class AuthService {
 
     return this.login(user);
   }
+
+  async getProfile(payload: any){
+    const user = await this.usersService.findOne(payload.email);
+
+    return {
+      _id: payload._id,
+      firstname: user.firstname,
+      lastname: user.lastname
+    }
+  }
 }
