@@ -1,5 +1,5 @@
 import { Response } from '@/types/service.type';
-import { SignUpParams, SignInParams, SessionInfo } from '@/types/user.type';
+import { SignUpParams, SignInParams, SessionInfo, UserInfo } from '@/types/user.type';
 import http from './index';
 
 class UserService {
@@ -22,6 +22,15 @@ class UserService {
         return new Response<SessionInfo>(false, res.data, res.status, 'Signed In succesfully');
       } catch (error) {
         return new Response<SessionInfo>(true, null, error.response.status, error.response.data.message);
+      }
+    }
+
+    async getProfile(): Promise<Response<UserInfo>> {
+      try {
+        const res = await http.get('/profile');
+        return new Response<UserInfo>(false, res.data, res.status, '');
+      } catch (error) {
+        return new Response<UserInfo>(true, null, error.response.status, error.response.data.message);
       }
     }
 }

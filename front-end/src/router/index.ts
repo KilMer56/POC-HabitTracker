@@ -31,13 +31,22 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   console.log(`Route to : ${to.name?.toString()}`);
-  
-  if (to.name
-    && !['SignIn', 'SignUp'].includes(to.name.toString())
-    && !UserStore.isAuthentificated()) {
+  const disconnectedRoutes = ['SignIn', 'SignUp']
+
+  if(to.name){
+    if (UserStore.isAuthentificated() && disconnectedRoutes.includes(to.name.toString())){
+      next({ name: 'Dashboard' })
+    }
+    else if (!UserStore.isAuthentificated() && !disconnectedRoutes.includes(to.name.toString())){
       next({ name: 'SignIn' })
+    }
+    else {
+      next();
+    }
   }
-  else next()
+  else {
+    next();
+  }
 })
 
 export default router;

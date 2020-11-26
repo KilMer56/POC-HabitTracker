@@ -1,7 +1,7 @@
 <template>
-  <div class="big center">
+  <div class="big app-content">
     <Sidebar v-if="isUserAuthentificated"/>
-    <router-view class="big"></router-view>
+    <router-view class="w-full"></router-view>
   </div>
 </template>
 
@@ -111,5 +111,14 @@ button:hover {
 .title {
   margin-bottom: 1rem;
   color: #474747;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.app-content {
+  display: flex;
+  align-items: stretch;
 }
 </style>

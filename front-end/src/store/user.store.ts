@@ -12,7 +12,7 @@ class UserStore extends Store<UserState> {
     data(): UserState {
       return {
         token: '',
-        user: undefined,
+        user: undefined
       };
     }
 
@@ -29,11 +29,20 @@ class UserStore extends Store<UserState> {
     }
 
     getFullName(): string {
-      return `${this.state.user?.firstname} ${this.state.user?.lastname}`;
+      return `${this.getState().user?.firstname} ${this.getState().user?.lastname}`;
     }
 
     getToken(): string {
-      return this.state.token;
+      return this.getState().token;
+    }
+
+    getUser(): UserInfo | undefined {
+      return this.getState().user;
+    }
+
+    clean() {
+      this.state.token = "";
+      this.state.user = undefined;
     }
 }
 

@@ -1,5 +1,7 @@
 <template>
-  <h1>Dashboard</h1>
+  <div class="dashboard">
+    <h1>Dashboard</h1>
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,5 +11,11 @@ export default class Dashboard extends Vue {}
 </script>
 
 <style scoped>
+.dashboard {
+  padding: 2rem 3rem;
+}
 
+.dashboard h1 {
+  margin: 0;
+}
 </style>
