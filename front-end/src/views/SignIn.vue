@@ -1,5 +1,5 @@
 <template>
-  <div class="big center">
+  <div class="center">
     <div class="card flat-shadow">
       <h1 class="text-center title">Sign In</h1>
       <form novalidate @submit.prevent="onSubmit">
@@ -49,7 +49,7 @@ export default class SignIn extends mixins(Toast, Form) {
         this.$router.push("/dashboard");
       }
       else {
-        this.toast.error(response.message);
+        this.toast.error("Your credentials are not valid");
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="big center">
+  <div class="center">
     <div class="card flat-shadow">
       <h1 class="text-center title">Sign Up</h1>
       <form novalidate @submit.prevent="onSubmit">
@@ -21,7 +21,7 @@
           <input type="password" v-model="confirmPassword" />
         </FormInput>
         <div class="center">
-          <button class="secondary" @click="$router.go(-1)" style="margin-right: 20px">Return</button>
+          <button class="secondary" type="button" @click="$router.go(-1)" style="margin-right: 20px">Return</button>
           <button class="primary" type="submit">Sign Up</button>
         </div>
       </form>

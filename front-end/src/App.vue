@@ -1,11 +1,25 @@
 <template>
-  <router-view></router-view>
+  <div class="big center">
+    <Sidebar v-if="isUserAuthentificated"/>
+    <router-view class="big"></router-view>
+  </div>
 </template>
 
 <script lang="ts">
-import { Vue } from 'vue-class-component';
+import { Options, Vue } from 'vue-class-component';
+import Sidebar from './components/Sidebar.vue';
+import UserStore from './store/user.store';
 
-export default class App extends Vue {}
+@Options({
+  components: {
+    Sidebar
+  }
+})
+export default class App extends Vue {
+  get isUserAuthentificated(): boolean {
+    return UserStore.isAuthentificated();
+  }
+}
 </script>
 
 <style>
