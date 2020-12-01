@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './user.schema';
-import { CreateUserDto } from '../dto/create-user.dto'
+import { CreateUserDto } from '../dto/auth.dto'
 
 @Injectable()
 export class UsersService {
